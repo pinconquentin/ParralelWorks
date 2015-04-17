@@ -1,0 +1,13 @@
+#define tEQU 257
+#define tSOU 258
+#define tADD 259
+#define tMUL 260
+#define tDIV 261
+#define tCOP 262
+#define tAFC 263
+#define tJMP 264
+#define tJMF 265
+#define tINF 266
+#define tSUP 267
+#define tPRI 268
+#define tNB 269

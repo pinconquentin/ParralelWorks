@@ -1,0 +1,55 @@
+AFC 4,3
+COP 3, 4
+AFC 4,6
+COP 0, 4
+COP 4, 3
+COP 5, 0
+ADD 4, 4, 5
+COP 3, 4
+AFC 5,5
+AFC 6,2
+ADD 5, 5, 6
+COP 6, 0
+DIV 5, 5, 6
+COP 4, 5
+COP 5, 4
+COP 6, 0
+SUP 5, 5, 6
+JMF 5, 46   
+AFC 7,10
+COP 6, 7
+COP 7, 0
+COP 8, 3
+INF 7, 7, 8
+JMF 7, 28   
+AFC 8,5
+COP 0, 8
+JMP    46    
+AFC 8,10
+COP 0, 8
+COP 8, 3
+AFC 9,27
+EQU 8, 8, 9
+JMF 8, 46   
+AFC 9,46
+COP 4, 9
+COP 9, 4
+AFC 10,46
+EQU 9, 9, 10
+JMF 9, 45   
+COP 10, 4
+AFC 11,1
+SOU 10, 10, 11
+COP 4, 10
+JMP    36   
+JMP    50    
+COP 10, 3
+AFC 11,2
+ADD 10, 10, 11
+COP 3, 10
+COP 10, 0
+COP 11, 6
+INF 10, 10, 11
+JMF 10,56    
+COP 11, 3
+COP 3, 11

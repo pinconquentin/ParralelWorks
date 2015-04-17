@@ -1,0 +1,979 @@
+   0  $accept : Start $end
+
+   1  Start : DeclaFonc Main Fonction
+
+   2  $$1 :
+
+   3  $$2 :
+
+   4  DeclaFonc : tINT tFONCTION $$1 tPV $$2 Suite
+
+   5  Suite : DeclaFonc
+   6        | tINT
+
+   7  $$3 :
+
+   8  $$4 :
+
+   9  Fonction : tINT tFONCTION $$3 tCO Core tCF $$4 Fonction
+  10           |
+
+  11  Main : tMAIN tPO tPF tCO Core tCF
+
+  12  Core : Declaration
+  13       | Affectation
+  14       | Ifelse
+  15       | Call
+  16       | Return
+  17       |
+
+  18  $$5 :
+
+  19  Declaration : tINT tID tPV $$5 Core
+
+  20  $$6 :
+
+  21  $$7 :
+
+  22  Declaration : tINT tID $$6 tEGAL Expression $$7 tPV Core
+
+  23  Ifelse : tIF tPO Condition tPF tCO ActionJMF Core tCF ActionFJMF Core
+  24         | tIF tPO Condition tPF tCO ActionJMF Core tCF ActionFJMF tELSE tCO Core tCF Core
+
+  25  ActionJMF :
+
+  26  ActionFJMF :
+
+  27  Condition : Expression Comp Expression
+
+  28  Comp : tSUP
+  29       | tINF
+  30       | tEGAL tEGAL
+
+  31  $$8 :
+
+  32  Affectation : tID tEGAL Expression $$8 tPV Core
+
+  33  Expression : Expression tADD Expression
+  34             | Expression tSOU Expression
+  35             | Expression tMUL Expression
+  36             | Expression tDIV Expression
+  37             | tPO Expression tPF
+  38             | tID
+  39             | tNB
+
+  40  $$9 :
+
+  41  Call : tFONCTION $$9 tPV Core
+
+  42  Return : tRET tNB tPV
+  43         | tRET tID tPV
+
+state 0
+	$accept : . Start $end  (0)
+
+	tINT  shift 1
+	.  error
+
+	Start  goto 2
+	DeclaFonc  goto 3
+
+
+state 1
+	DeclaFonc : tINT . tFONCTION $$1 tPV $$2 Suite  (4)
+
+	tFONCTION  shift 4
+	.  error
+
+
+state 2
+	$accept : Start . $end  (0)
+
+	$end  accept
+
+
+state 3
+	Start : DeclaFonc . Main Fonction  (1)
+
+	tMAIN  shift 5
+	.  error
+
+	Main  goto 6
+
+
+state 4
+	DeclaFonc : tINT tFONCTION . $$1 tPV $$2 Suite  (4)
+	$$1 : .  (2)
+
+	.  reduce 2
+
+	$$1  goto 7
+
+
+state 5
+	Main : tMAIN . tPO tPF tCO Core tCF  (11)
+
+	tPO  shift 8
+	.  error
+
+
+state 6
+	Start : DeclaFonc Main . Fonction  (1)
+	Fonction : .  (10)
+
+	tINT  shift 9
+	$end  reduce 10
+
+	Fonction  goto 10
+
+
+state 7
+	DeclaFonc : tINT tFONCTION $$1 . tPV $$2 Suite  (4)
+
+	tPV  shift 11
+	.  error
+
+
+state 8
+	Main : tMAIN tPO . tPF tCO Core tCF  (11)
+
+	tPF  shift 12
+	.  error
+
+
+state 9
+	Fonction : tINT . tFONCTION $$3 tCO Core tCF $$4 Fonction  (9)
+
+	tFONCTION  shift 13
+	.  error
+
+
+state 10
+	Start : DeclaFonc Main Fonction .  (1)
+
+	.  reduce 1
+
+
+state 11
+	DeclaFonc : tINT tFONCTION $$1 tPV . $$2 Suite  (4)
+	$$2 : .  (3)
+
+	.  reduce 3
+
+	$$2  goto 14
+
+
+state 12
+	Main : tMAIN tPO tPF . tCO Core tCF  (11)
+
+	tCO  shift 15
+	.  error
+
+
+state 13
+	Fonction : tINT tFONCTION . $$3 tCO Core tCF $$4 Fonction  (9)
+	$$3 : .  (7)
+
+	.  reduce 7
+
+	$$3  goto 16
+
+
+state 14
+	DeclaFonc : tINT tFONCTION $$1 tPV $$2 . Suite  (4)
+
+	tINT  shift 17
+	.  error
+
+	DeclaFonc  goto 18
+	Suite  goto 19
+
+
+state 15
+	Main : tMAIN tPO tPF tCO . Core tCF  (11)
+	Core : .  (17)
+
+	tRET  shift 20
+	tINT  shift 21
+	tIF  shift 22
+	tID  shift 23
+	tFONCTION  shift 24
+	tCF  reduce 17
+
+	Core  goto 25
+	Declaration  goto 26
+	Affectation  goto 27
+	Ifelse  goto 28
+	Call  goto 29
+	Return  goto 30
+
+
+state 16
+	Fonction : tINT tFONCTION $$3 . tCO Core tCF $$4 Fonction  (9)
+
+	tCO  shift 31
+	.  error
+
+
+state 17
+	DeclaFonc : tINT . tFONCTION $$1 tPV $$2 Suite  (4)
+	Suite : tINT .  (6)
+
+	tFONCTION  shift 4
+	tMAIN  reduce 6
+
+
+state 18
+	Suite : DeclaFonc .  (5)
+
+	.  reduce 5
+
+
+state 19
+	DeclaFonc : tINT tFONCTION $$1 tPV $$2 Suite .  (4)
+
+	.  reduce 4
+
+
+state 20
+	Return : tRET . tNB tPV  (42)
+	Return : tRET . tID tPV  (43)
+
+	tNB  shift 32
+	tID  shift 33
+	.  error
+
+
+state 21
+	Declaration : tINT . tID tPV $$5 Core  (19)
+	Declaration : tINT . tID $$6 tEGAL Expression $$7 tPV Core  (22)
+
+	tID  shift 34
+	.  error
+
+
+state 22
+	Ifelse : tIF . tPO Condition tPF tCO ActionJMF Core tCF ActionFJMF Core  (23)
+	Ifelse : tIF . tPO Condition tPF tCO ActionJMF Core tCF ActionFJMF tELSE tCO Core tCF Core  (24)
+
+	tPO  shift 35
+	.  error
+
+
+state 23
+	Affectation : tID . tEGAL Expression $$8 tPV Core  (32)
+
+	tEGAL  shift 36
+	.  error
+
+
+state 24
+	Call : tFONCTION . $$9 tPV Core  (41)
+	$$9 : .  (40)
+
+	.  reduce 40
+
+	$$9  goto 37
+
+
+state 25
+	Main : tMAIN tPO tPF tCO Core . tCF  (11)
+
+	tCF  shift 38
+	.  error
+
+
+state 26
+	Core : Declaration .  (12)
+
+	.  reduce 12
+
+
+state 27
+	Core : Affectation .  (13)
+
+	.  reduce 13
+
+
+state 28
+	Core : Ifelse .  (14)
+
+	.  reduce 14
+
+
+state 29
+	Core : Call .  (15)
+
+	.  reduce 15
+
+
+state 30
+	Core : Return .  (16)
+
+	.  reduce 16
+
+
+state 31
+	Fonction : tINT tFONCTION $$3 tCO . Core tCF $$4 Fonction  (9)
+	Core : .  (17)
+
+	tRET  shift 20
+	tINT  shift 21
+	tIF  shift 22
+	tID  shift 23
+	tFONCTION  shift 24
+	tCF  reduce 17
+
+	Core  goto 39
+	Declaration  goto 26
+	Affectation  goto 27
+	Ifelse  goto 28
+	Call  goto 29
+	Return  goto 30
+
+
+state 32
+	Return : tRET tNB . tPV  (42)
+
+	tPV  shift 40
+	.  error
+
+
+state 33
+	Return : tRET tID . tPV  (43)
+
+	tPV  shift 41
+	.  error
+
+
+state 34
+	Declaration : tINT tID . tPV $$5 Core  (19)
+	Declaration : tINT tID . $$6 tEGAL Expression $$7 tPV Core  (22)
+	$$6 : .  (20)
+
+	tPV  shift 42
+	tEGAL  reduce 20
+
+	$$6  goto 43
+
+
+state 35
+	Ifelse : tIF tPO . Condition tPF tCO ActionJMF Core tCF ActionFJMF Core  (23)
+	Ifelse : tIF tPO . Condition tPF tCO ActionJMF Core tCF ActionFJMF tELSE tCO Core tCF Core  (24)
+
+	tPO  shift 44
+	tNB  shift 45
+	tID  shift 46
+	.  error
+
+	Expression  goto 47
+	Condition  goto 48
+
+
+state 36
+	Affectation : tID tEGAL . Expression $$8 tPV Core  (32)
+
+	tPO  shift 44
+	tNB  shift 45
+	tID  shift 46
+	.  error
+
+	Expression  goto 49
+
+
+state 37
+	Call : tFONCTION $$9 . tPV Core  (41)
+
+	tPV  shift 50
+	.  error
+
+
+state 38
+	Main : tMAIN tPO tPF tCO Core tCF .  (11)
+
+	.  reduce 11
+
+
+state 39
+	Fonction : tINT tFONCTION $$3 tCO Core . tCF $$4 Fonction  (9)
+
+	tCF  shift 51
+	.  error
+
+
+state 40
+	Return : tRET tNB tPV .  (42)
+
+	.  reduce 42
+
+
+state 41
+	Return : tRET tID tPV .  (43)
+
+	.  reduce 43
+
+
+state 42
+	Declaration : tINT tID tPV . $$5 Core  (19)
+	$$5 : .  (18)
+
+	.  reduce 18
+
+	$$5  goto 52
+
+
+state 43
+	Declaration : tINT tID $$6 . tEGAL Expression $$7 tPV Core  (22)
+
+	tEGAL  shift 53
+	.  error
+
+
+state 44
+	Expression : tPO . Expression tPF  (37)
+
+	tPO  shift 44
+	tNB  shift 45
+	tID  shift 46
+	.  error
+
+	Expression  goto 54
+
+
+state 45
+	Expression : tNB .  (39)
+
+	.  reduce 39
+
+
+state 46
+	Expression : tID .  (38)
+
+	.  reduce 38
+
+
+state 47
+	Condition : Expression . Comp Expression  (27)
+	Expression : Expression . tADD Expression  (33)
+	Expression : Expression . tSOU Expression  (34)
+	Expression : Expression . tMUL Expression  (35)
+	Expression : Expression . tDIV Expression  (36)
+
+	tINF  shift 55
+	tSUP  shift 56
+	tEGAL  shift 57
+	tSOU  shift 58
+	tADD  shift 59
+	tMUL  shift 60
+	tDIV  shift 61
+	.  error
+
+	Comp  goto 62
+
+
+state 48
+	Ifelse : tIF tPO Condition . tPF tCO ActionJMF Core tCF ActionFJMF Core  (23)
+	Ifelse : tIF tPO Condition . tPF tCO ActionJMF Core tCF ActionFJMF tELSE tCO Core tCF Core  (24)
+
+	tPF  shift 63
+	.  error
+
+
+state 49
+	Affectation : tID tEGAL Expression . $$8 tPV Core  (32)
+	Expression : Expression . tADD Expression  (33)
+	Expression : Expression . tSOU Expression  (34)
+	Expression : Expression . tMUL Expression  (35)
+	Expression : Expression . tDIV Expression  (36)
+	$$8 : .  (31)
+
+	tSOU  shift 58
+	tADD  shift 59
+	tMUL  shift 60
+	tDIV  shift 61
+	tPV  reduce 31
+
+	$$8  goto 64
+
+
+state 50
+	Call : tFONCTION $$9 tPV . Core  (41)
+	Core : .  (17)
+
+	tRET  shift 20
+	tINT  shift 21
+	tIF  shift 22
+	tID  shift 23
+	tFONCTION  shift 24
+	tCF  reduce 17
+
+	Core  goto 65
+	Declaration  goto 26
+	Affectation  goto 27
+	Ifelse  goto 28
+	Call  goto 29
+	Return  goto 30
+
+
+state 51
+	Fonction : tINT tFONCTION $$3 tCO Core tCF . $$4 Fonction  (9)
+	$$4 : .  (8)
+
+	.  reduce 8
+
+	$$4  goto 66
+
+
+state 52
+	Declaration : tINT tID tPV $$5 . Core  (19)
+	Core : .  (17)
+
+	tRET  shift 20
+	tINT  shift 21
+	tIF  shift 22
+	tID  shift 23
+	tFONCTION  shift 24
+	tCF  reduce 17
+
+	Core  goto 67
+	Declaration  goto 26
+	Affectation  goto 27
+	Ifelse  goto 28
+	Call  goto 29
+	Return  goto 30
+
+
+state 53
+	Declaration : tINT tID $$6 tEGAL . Expression $$7 tPV Core  (22)
+
+	tPO  shift 44
+	tNB  shift 45
+	tID  shift 46
+	.  error
+
+	Expression  goto 68
+
+
+state 54
+	Expression : Expression . tADD Expression  (33)
+	Expression : Expression . tSOU Expression  (34)
+	Expression : Expression . tMUL Expression  (35)
+	Expression : Expression . tDIV Expression  (36)
+	Expression : tPO Expression . tPF  (37)
+
+	tSOU  shift 58
+	tADD  shift 59
+	tMUL  shift 60
+	tDIV  shift 61
+	tPF  shift 69
+	.  error
+
+
+state 55
+	Comp : tINF .  (29)
+
+	.  reduce 29
+
+
+state 56
+	Comp : tSUP .  (28)
+
+	.  reduce 28
+
+
+state 57
+	Comp : tEGAL . tEGAL  (30)
+
+	tEGAL  shift 70
+	.  error
+
+
+state 58
+	Expression : Expression tSOU . Expression  (34)
+
+	tPO  shift 44
+	tNB  shift 45
+	tID  shift 46
+	.  error
+
+	Expression  goto 71
+
+
+state 59
+	Expression : Expression tADD . Expression  (33)
+
+	tPO  shift 44
+	tNB  shift 45
+	tID  shift 46
+	.  error
+
+	Expression  goto 72
+
+
+state 60
+	Expression : Expression tMUL . Expression  (35)
+
+	tPO  shift 44
+	tNB  shift 45
+	tID  shift 46
+	.  error
+
+	Expression  goto 73
+
+
+state 61
+	Expression : Expression tDIV . Expression  (36)
+
+	tPO  shift 44
+	tNB  shift 45
+	tID  shift 46
+	.  error
+
+	Expression  goto 74
+
+
+state 62
+	Condition : Expression Comp . Expression  (27)
+
+	tPO  shift 44
+	tNB  shift 45
+	tID  shift 46
+	.  error
+
+	Expression  goto 75
+
+
+state 63
+	Ifelse : tIF tPO Condition tPF . tCO ActionJMF Core tCF ActionFJMF Core  (23)
+	Ifelse : tIF tPO Condition tPF . tCO ActionJMF Core tCF ActionFJMF tELSE tCO Core tCF Core  (24)
+
+	tCO  shift 76
+	.  error
+
+
+state 64
+	Affectation : tID tEGAL Expression $$8 . tPV Core  (32)
+
+	tPV  shift 77
+	.  error
+
+
+state 65
+	Call : tFONCTION $$9 tPV Core .  (41)
+
+	.  reduce 41
+
+
+state 66
+	Fonction : tINT tFONCTION $$3 tCO Core tCF $$4 . Fonction  (9)
+	Fonction : .  (10)
+
+	tINT  shift 9
+	$end  reduce 10
+
+	Fonction  goto 78
+
+
+state 67
+	Declaration : tINT tID tPV $$5 Core .  (19)
+
+	.  reduce 19
+
+
+state 68
+	Declaration : tINT tID $$6 tEGAL Expression . $$7 tPV Core  (22)
+	Expression : Expression . tADD Expression  (33)
+	Expression : Expression . tSOU Expression  (34)
+	Expression : Expression . tMUL Expression  (35)
+	Expression : Expression . tDIV Expression  (36)
+	$$7 : .  (21)
+
+	tSOU  shift 58
+	tADD  shift 59
+	tMUL  shift 60
+	tDIV  shift 61
+	tPV  reduce 21
+
+	$$7  goto 79
+
+
+state 69
+	Expression : tPO Expression tPF .  (37)
+
+	.  reduce 37
+
+
+state 70
+	Comp : tEGAL tEGAL .  (30)
+
+	.  reduce 30
+
+
+state 71
+	Expression : Expression . tADD Expression  (33)
+	Expression : Expression . tSOU Expression  (34)
+	Expression : Expression tSOU Expression .  (34)
+	Expression : Expression . tMUL Expression  (35)
+	Expression : Expression . tDIV Expression  (36)
+
+	tMUL  shift 60
+	tDIV  shift 61
+	tPV  reduce 34
+	tINF  reduce 34
+	tSUP  reduce 34
+	tEGAL  reduce 34
+	tSOU  reduce 34
+	tADD  reduce 34
+	tPF  reduce 34
+
+
+state 72
+	Expression : Expression . tADD Expression  (33)
+	Expression : Expression tADD Expression .  (33)
+	Expression : Expression . tSOU Expression  (34)
+	Expression : Expression . tMUL Expression  (35)
+	Expression : Expression . tDIV Expression  (36)
+
+	tMUL  shift 60
+	tDIV  shift 61
+	tPV  reduce 33
+	tINF  reduce 33
+	tSUP  reduce 33
+	tEGAL  reduce 33
+	tSOU  reduce 33
+	tADD  reduce 33
+	tPF  reduce 33
+
+
+state 73
+	Expression : Expression . tADD Expression  (33)
+	Expression : Expression . tSOU Expression  (34)
+	Expression : Expression . tMUL Expression  (35)
+	Expression : Expression tMUL Expression .  (35)
+	Expression : Expression . tDIV Expression  (36)
+
+	.  reduce 35
+
+
+state 74
+	Expression : Expression . tADD Expression  (33)
+	Expression : Expression . tSOU Expression  (34)
+	Expression : Expression . tMUL Expression  (35)
+	Expression : Expression . tDIV Expression  (36)
+	Expression : Expression tDIV Expression .  (36)
+
+	.  reduce 36
+
+
+state 75
+	Condition : Expression Comp Expression .  (27)
+	Expression : Expression . tADD Expression  (33)
+	Expression : Expression . tSOU Expression  (34)
+	Expression : Expression . tMUL Expression  (35)
+	Expression : Expression . tDIV Expression  (36)
+
+	tSOU  shift 58
+	tADD  shift 59
+	tMUL  shift 60
+	tDIV  shift 61
+	tPF  reduce 27
+
+
+state 76
+	Ifelse : tIF tPO Condition tPF tCO . ActionJMF Core tCF ActionFJMF Core  (23)
+	Ifelse : tIF tPO Condition tPF tCO . ActionJMF Core tCF ActionFJMF tELSE tCO Core tCF Core  (24)
+	ActionJMF : .  (25)
+
+	.  reduce 25
+
+	ActionJMF  goto 80
+
+
+state 77
+	Affectation : tID tEGAL Expression $$8 tPV . Core  (32)
+	Core : .  (17)
+
+	tRET  shift 20
+	tINT  shift 21
+	tIF  shift 22
+	tID  shift 23
+	tFONCTION  shift 24
+	tCF  reduce 17
+
+	Core  goto 81
+	Declaration  goto 26
+	Affectation  goto 27
+	Ifelse  goto 28
+	Call  goto 29
+	Return  goto 30
+
+
+state 78
+	Fonction : tINT tFONCTION $$3 tCO Core tCF $$4 Fonction .  (9)
+
+	.  reduce 9
+
+
+state 79
+	Declaration : tINT tID $$6 tEGAL Expression $$7 . tPV Core  (22)
+
+	tPV  shift 82
+	.  error
+
+
+state 80
+	Ifelse : tIF tPO Condition tPF tCO ActionJMF . Core tCF ActionFJMF Core  (23)
+	Ifelse : tIF tPO Condition tPF tCO ActionJMF . Core tCF ActionFJMF tELSE tCO Core tCF Core  (24)
+	Core : .  (17)
+
+	tRET  shift 20
+	tINT  shift 21
+	tIF  shift 22
+	tID  shift 23
+	tFONCTION  shift 24
+	tCF  reduce 17
+
+	Core  goto 83
+	Declaration  goto 26
+	Affectation  goto 27
+	Ifelse  goto 28
+	Call  goto 29
+	Return  goto 30
+
+
+state 81
+	Affectation : tID tEGAL Expression $$8 tPV Core .  (32)
+
+	.  reduce 32
+
+
+state 82
+	Declaration : tINT tID $$6 tEGAL Expression $$7 tPV . Core  (22)
+	Core : .  (17)
+
+	tRET  shift 20
+	tINT  shift 21
+	tIF  shift 22
+	tID  shift 23
+	tFONCTION  shift 24
+	tCF  reduce 17
+
+	Core  goto 84
+	Declaration  goto 26
+	Affectation  goto 27
+	Ifelse  goto 28
+	Call  goto 29
+	Return  goto 30
+
+
+state 83
+	Ifelse : tIF tPO Condition tPF tCO ActionJMF Core . tCF ActionFJMF Core  (23)
+	Ifelse : tIF tPO Condition tPF tCO ActionJMF Core . tCF ActionFJMF tELSE tCO Core tCF Core  (24)
+
+	tCF  shift 85
+	.  error
+
+
+state 84
+	Declaration : tINT tID $$6 tEGAL Expression $$7 tPV Core .  (22)
+
+	.  reduce 22
+
+
+state 85
+	Ifelse : tIF tPO Condition tPF tCO ActionJMF Core tCF . ActionFJMF Core  (23)
+	Ifelse : tIF tPO Condition tPF tCO ActionJMF Core tCF . ActionFJMF tELSE tCO Core tCF Core  (24)
+	ActionFJMF : .  (26)
+
+	.  reduce 26
+
+	ActionFJMF  goto 86
+
+
+state 86
+	Ifelse : tIF tPO Condition tPF tCO ActionJMF Core tCF ActionFJMF . Core  (23)
+	Ifelse : tIF tPO Condition tPF tCO ActionJMF Core tCF ActionFJMF . tELSE tCO Core tCF Core  (24)
+	Core : .  (17)
+
+	tRET  shift 20
+	tINT  shift 21
+	tIF  shift 22
+	tELSE  shift 87
+	tID  shift 23
+	tFONCTION  shift 24
+	tCF  reduce 17
+
+	Core  goto 88
+	Declaration  goto 26
+	Affectation  goto 27
+	Ifelse  goto 28
+	Call  goto 29
+	Return  goto 30
+
+
+state 87
+	Ifelse : tIF tPO Condition tPF tCO ActionJMF Core tCF ActionFJMF tELSE . tCO Core tCF Core  (24)
+
+	tCO  shift 89
+	.  error
+
+
+state 88
+	Ifelse : tIF tPO Condition tPF tCO ActionJMF Core tCF ActionFJMF Core .  (23)
+
+	.  reduce 23
+
+
+state 89
+	Ifelse : tIF tPO Condition tPF tCO ActionJMF Core tCF ActionFJMF tELSE tCO . Core tCF Core  (24)
+	Core : .  (17)
+
+	tRET  shift 20
+	tINT  shift 21
+	tIF  shift 22
+	tID  shift 23
+	tFONCTION  shift 24
+	tCF  reduce 17
+
+	Core  goto 90
+	Declaration  goto 26
+	Affectation  goto 27
+	Ifelse  goto 28
+	Call  goto 29
+	Return  goto 30
+
+
+state 90
+	Ifelse : tIF tPO Condition tPF tCO ActionJMF Core tCF ActionFJMF tELSE tCO Core . tCF Core  (24)
+
+	tCF  shift 91
+	.  error
+
+
+state 91
+	Ifelse : tIF tPO Condition tPF tCO ActionJMF Core tCF ActionFJMF tELSE tCO Core tCF . Core  (24)
+	Core : .  (17)
+
+	tRET  shift 20
+	tINT  shift 21
+	tIF  shift 22
+	tID  shift 23
+	tFONCTION  shift 24
+	tCF  reduce 17
+
+	Core  goto 92
+	Declaration  goto 26
+	Affectation  goto 27
+	Ifelse  goto 28
+	Call  goto 29
+	Return  goto 30
+
+
+state 92
+	Ifelse : tIF tPO Condition tPF tCO ActionJMF Core tCF ActionFJMF tELSE tCO Core tCF Core .  (24)
+
+	.  reduce 24
+
+
+25 terminals, 26 nonterminals
+44 grammar rules, 93 states
